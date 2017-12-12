@@ -78,6 +78,33 @@ namespace Tests
 			Assert.AreEqual(TokenConstants.Type.Identificator, actualType);
 			Assert.AreEqual(actualToken, actualValue);
 		}
+		
+		[TestMethod]
+		public void VariableToken()
+		{
+			const string actualToken = "#Var";
+
+			var actualModel = Lexer.GetToken(actualToken);
+
+			var actualType = actualModel.Type;
+			var actualValue = actualModel.Value;
+
+			Assert.AreEqual(TokenConstants.Type.Variable, actualType);
+			Assert.AreEqual("Var", actualValue);
+		}
+
+		[TestMethod]
+		public void WrongVariable()
+		{
+			const string actualToken = "#25";
+
+			var actualModel = Lexer.GetToken(actualToken);
+
+			var actualType = actualModel.Type;
+			var actualValue = actualModel.Value;
+
+			Assert.AreEqual(TokenConstants.Type.Error, actualType);
+		}
 
 		[TestMethod]
 		public void WrongToken()
@@ -88,7 +115,7 @@ namespace Tests
 
 			var actualType = actualModel.Type;
 
-			Assert.AreEqual(TokenConstants.Type.Nullable, actualType);
+			Assert.AreEqual(TokenConstants.Type.Error, actualType);
 		}
 	}
 }

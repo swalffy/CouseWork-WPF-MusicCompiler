@@ -6,7 +6,6 @@ namespace CouseWork.musiccompiler.lexer
 {
 	public static class Lexer
 	{
-
 		private static char GetNextChar(StreamReader reader)
 		{
 			return (char) reader.Read();
@@ -22,7 +21,7 @@ namespace CouseWork.musiccompiler.lexer
 			{
 				if (string.IsNullOrEmpty(line))
 				{
-					token.Type = TokenConstants.Type.Empty;
+					token.Type = TokenConstants.Type.Error;
 				}
 				else if (currentSymbol == ' ')
 				{
@@ -59,14 +58,46 @@ namespace CouseWork.musiccompiler.lexer
 						token.Type = TokenConstants.Type.Identificator;
 						token.Value = sb.ToString();
 					}
-					else if (true)
+					else
 					{
-						// TODO variable implimentation
+						token.Type = TokenConstants.Type.Error;
+						token.Value = "Unexpected token";
+//						TODO lexer error		
+					}
+				}
+				else if (currentSymbol.Equals(TokenConstants.VariableStarter))
+				{
+					var sb = new StringBuilder();
+					currentSymbol = GetNextChar(reader);
+					if (char.IsLetter(currentSymbol))
+					{
+						do
+						{
+							sb.Append(currentSymbol);
+						} while (char.IsLetterOrDigit(currentSymbol = GetNextChar(reader)));
+						if (sb.Length < 24)
+						{
+							token.Type = TokenConstants.Type.Variable;
+							token.Value = sb.ToString();
+						}
+						else
+						{
+							token.Type = TokenConstants.Type.Error;
+							token.Value = "Too long variable name";
+						}
+					}
+					else
+					{
+						token.Type = TokenConstants.Type.Error;
+						token.Value = "Wrong variable name";
+//						TODO lexer error
 					}
 				}
 				else
 				{
-					return token;
+					token.Type = TokenConstants.Type.Error;
+					token.Value = "Wrong Token";
+//					TODO lexer error
 				}
 			}
 			return token;

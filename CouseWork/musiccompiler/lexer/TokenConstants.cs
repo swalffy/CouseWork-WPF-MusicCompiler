@@ -4,6 +4,8 @@ namespace CouseWork.musiccompiler.lexer
 {
 	public static class TokenConstants
 	{
+		public const char VariableStarter = '#';
+
 		public static Dictionary<char, Symbol> Symbols { get; } = new Dictionary<char, Symbol>()
 		{
 			{'=', Symbol.Equals},
@@ -23,10 +25,11 @@ namespace CouseWork.musiccompiler.lexer
 		public enum Type
 		{
 			Nullable,
-			Empty,
+			Error,
 			Number,
 			Symbol,
-			Identificator
+			Identificator,
+			Variable
 		}
 
 		public enum Symbol
