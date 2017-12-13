@@ -1,5 +1,6 @@
 ﻿using System;
-using CouseWork.musiccompiler.lexer;
+using CouseWork.musiccompiler.Api;
+using CouseWork.musiccompiler.Controller;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests

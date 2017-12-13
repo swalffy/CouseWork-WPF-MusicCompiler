@@ -1,4 +1,6 @@
-﻿namespace CouseWork.musiccompiler.lexer
+﻿using CouseWork.musiccompiler.Api;
+
+namespace CouseWork.musiccompiler.Model
 {
 	public class TokenModel
 	{

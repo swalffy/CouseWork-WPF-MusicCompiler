@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CouseWork.musiccompiler.lexer
+namespace CouseWork.musiccompiler.Api
 {
 	public static class TokenConstants
 	{

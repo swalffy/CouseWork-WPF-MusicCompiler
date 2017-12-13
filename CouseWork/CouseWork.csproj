@@ -68,10 +68,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="musiccompiler\lexer\Lexer.cs" />
-    <Compile Include="musiccompiler\lexer\TokenConstants.cs" />
-    <Compile Include="musiccompiler\lexer\TokenModel.cs" />
-    <Compile Include="musiccompiler\utils\Utils.cs" />
+    <Compile Include="musiccompiler\Controller\Lexer.cs" />
+    <Compile Include="musiccompiler\Api\TokenConstants.cs" />
+    <Compile Include="musiccompiler\Model\TokenModel.cs" />
+    <Compile Include="musiccompiler\Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,9 +97,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="musiccompiler\compiler\" />
-    <Folder Include="musiccompiler\parser\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

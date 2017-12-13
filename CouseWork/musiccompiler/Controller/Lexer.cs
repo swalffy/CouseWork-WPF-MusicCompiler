@@ -1,13 +1,16 @@
 ﻿using System.IO;
 using System.Text;
+using CouseWork.musiccompiler.Api;
+using CouseWork.musiccompiler.Model;
 using CouseWork.musiccompiler.utils;
 
-namespace CouseWork.musiccompiler.lexer
+namespace CouseWork.musiccompiler.Controller
 {
 	public static class Lexer
 	{
 		private static char GetNextChar(StreamReader reader)
 		{
+
 			return (char) reader.Read();
 		}
 
@@ -29,6 +32,7 @@ namespace CouseWork.musiccompiler.lexer
 				}
 				else if (TokenConstants.Symbols.ContainsKey(currentSymbol))
 				{
+					
 					token.Type = TokenConstants.Type.Symbol;
 					token.Value = currentSymbol.ToString();
 					currentSymbol = GetNextChar(reader);
@@ -100,6 +104,7 @@ namespace CouseWork.musiccompiler.lexer
 //					TODO lexer error
 				}
 			}
+			reader.Close();
 			return token;
 		}
 	}
