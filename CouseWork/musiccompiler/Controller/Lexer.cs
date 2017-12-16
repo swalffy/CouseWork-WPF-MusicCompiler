@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Model;
@@ -47,7 +46,7 @@ namespace CouseWork.musiccompiler.Controller
 				{
 					currentSymbol = GetNextChar();
 				}
-				else if (currentSymbol == '\n')
+				else if (currentSymbol == TokenConstants.Line)
 				{
 					return new TokenModel("line", TokenConstants.Type.Symbol);
 				}

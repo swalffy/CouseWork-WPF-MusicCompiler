@@ -1,5 +1,4 @@
-﻿using System;
-using CouseWork.musiccompiler.Api;
+﻿using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Controller;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -108,7 +107,6 @@ namespace Tests
 			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
-			var actualValue = actualModel.Value;
 
 			Assert.AreEqual(TokenConstants.Type.Error, actualType);
 		}
