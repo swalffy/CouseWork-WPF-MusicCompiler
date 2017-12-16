@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CouseWork.musiccompiler.Api
 {
@@ -6,20 +7,27 @@ namespace CouseWork.musiccompiler.Api
 	{
 		public const char VariableStarter = '#';
 
-		public static Dictionary<char, Symbol> Symbols { get; } = new Dictionary<char, Symbol>()
-		{
-			{'=', Symbol.Equals},
-			{'+', Symbol.Plus},
-			{'-', Symbol.Plus},
-			{'\n', Symbol.Line},
-			{'\t', Symbol.Tab}
-		};
+		public const int VariableMaxLenght = 16;
 
-		public static Dictionary<string, Identificator> Identificators { get; } = new Dictionary<string, Identificator>()
+		public static char Line { get; } = '\n';
+
+		public static List<string> Notes { get; } = new List<string>()
 		{
-			{"if", Identificator.If},
-			{"else", Identificator.Else},
-			{"while", Identificator.While}
+			"n0",
+			"n1",
+			"n2",
+			"n3",
+			"n4",
+			"n5",
+			"n6",
+			"n7"
+		};
+		
+		public static List<string> Identificators { get; } = new List<string>()
+		{
+			"repeat",
+			"sleep",
+			"thread",
 		};
 
 		public enum Type
@@ -27,27 +35,10 @@ namespace CouseWork.musiccompiler.Api
 			Nullable,
 			Error,
 			Number,
+			Note,
 			Symbol,
 			Identificator,
 			Variable
-		}
-
-		public enum Symbol
-		{
-			Equals,
-			Plus,
-			Minus,
-			Line,
-			Tab
-		}
-
-		public enum Identificator
-		{
-			If,
-			While,
-			Else,
-			Repeat,
-			Thread
 		}
 	}
 }

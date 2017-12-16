@@ -4,14 +4,14 @@ namespace CouseWork.musiccompiler.Model
 {
 	public class TokenModel
 	{
-		public TokenConstants.Type Type { get; set; }
+		public TokenConstants.Type Type { get; }
 
-		public string Value { get; set; }
+		public string Value { get; }
 
-		public TokenModel()
+		public TokenModel(string value, TokenConstants.Type type)
 		{
-			Type = TokenConstants.Type.Nullable;
-			Value = "";
+			Type = type;
+			Value = value;
 		}
 	}
 }

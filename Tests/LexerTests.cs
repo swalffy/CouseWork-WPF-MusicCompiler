@@ -9,33 +9,39 @@ namespace Tests
 	public class LexerTests
 	{
 		[TestMethod]
-		public void SingleSimbol()
+		public void SingleNote()
 		{
-			const string actualToken = "+";
+			const string actualToken = "n2";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Symbol, actualType);
-			Assert.IsTrue(TokenConstants.Symbols.ContainsKey(Char.Parse(actualToken)));
+			Assert.AreEqual(TokenConstants.Type.Note, actualType);
 			Assert.AreEqual(actualToken, actualValue);
 		}
 
 		[TestMethod]
-		public void FewSimbols()
+		public void FewNotes()
 		{
-			const string actualToken = "+-";
+			const string actualToken = "n1n2";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			Lexer lexer = new Lexer(actualToken);
+			var actualModel = lexer.GetNextToken();
 
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Symbol, actualType);
-			Assert.IsTrue(TokenConstants.Symbols.ContainsKey(actualToken[0]));
-			Assert.AreEqual(actualToken[0].ToString(), actualValue);
+			Assert.AreEqual(TokenConstants.Type.Note, actualType);
+			Assert.AreEqual(actualToken[0].ToString() + actualToken[1].ToString(), actualValue);
+
+			actualModel = lexer.GetNextToken();
+			actualType = actualModel.Type;
+			actualValue = actualModel.Value;
+
+			Assert.AreEqual(TokenConstants.Type.Note, actualType);
+			Assert.AreEqual(actualToken[2].ToString() + actualToken[3].ToString(), actualValue);
 		}
 
 		[TestMethod]
@@ -43,7 +49,7 @@ namespace Tests
 		{
 			const string actualToken = "5";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
@@ -57,7 +63,7 @@ namespace Tests
 		{
 			const string actualToken = "4568";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
@@ -69,23 +75,23 @@ namespace Tests
 		[TestMethod]
 		public void CorrectIdentificator()
 		{
-			const string actualToken = "if";
+			const string actualToken = "repeat";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
-			
+
 			Assert.AreEqual(TokenConstants.Type.Identificator, actualType);
 			Assert.AreEqual(actualToken, actualValue);
 		}
-		
+
 		[TestMethod]
 		public void VariableToken()
 		{
 			const string actualToken = "#Var";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
@@ -99,7 +105,7 @@ namespace Tests
 		{
 			const string actualToken = "#25";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
@@ -112,7 +118,7 @@ namespace Tests
 		{
 			const string actualToken = "IasdF";
 
-			var actualModel = Lexer.GetToken(actualToken);
+			var actualModel = new Lexer(actualToken).GetNextToken();
 
 			var actualType = actualModel.Type;
 

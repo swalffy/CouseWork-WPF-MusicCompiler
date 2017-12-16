@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Model;
@@ -6,36 +7,49 @@ using CouseWork.musiccompiler.utils;
 
 namespace CouseWork.musiccompiler.Controller
 {
-	public static class Lexer
+	public class Lexer
 	{
-		private static char GetNextChar(StreamReader reader)
-		{
+		private readonly StreamReader _reader;
 
-			return (char) reader.Read();
+		public Lexer(string line)
+		{
+			if (string.IsNullOrEmpty(line))
+			{
+				_reader = StreamReader.Null;
+			}
+			else
+			{
+				_reader = Utils.GetStreamFromString(line);
+			}
 		}
 
-		public static TokenModel GetToken(string line)
+		~Lexer()
 		{
-			var reader = Utils.GetStreamFromString(line);
-			var token = new TokenModel();
-			var currentSymbol = GetNextChar(reader);
+			_reader.Close();
+		}
 
-			while (token.Type.Equals(TokenConstants.Type.Nullable))
+		private char GetNextChar()
+		{
+			return (char) _reader.Read();
+		}
+
+		public TokenModel GetNextToken()
+		{
+			var currentSymbol = GetNextChar();
+
+			while (true)
 			{
-				if (string.IsNullOrEmpty(line))
+				if (_reader == null)
 				{
-					token.Type = TokenConstants.Type.Error;
+					return new TokenModel("EmptyLine", TokenConstants.Type.Error);
 				}
 				else if (currentSymbol == ' ')
 				{
-					currentSymbol = GetNextChar(reader);
+					currentSymbol = GetNextChar();
 				}
-				else if (TokenConstants.Symbols.ContainsKey(currentSymbol))
+				else if (currentSymbol == '\n')
 				{
-					
-					token.Type = TokenConstants.Type.Symbol;
-					token.Value = currentSymbol.ToString();
-					currentSymbol = GetNextChar(reader);
+					return new TokenModel("line", TokenConstants.Type.Symbol);
 				}
 				else if (char.IsDigit(currentSymbol))
 				{
@@ -44,10 +58,9 @@ namespace CouseWork.musiccompiler.Controller
 					do
 					{
 						value = value * 10 + int.Parse(currentSymbol.ToString());
-						currentSymbol = GetNextChar(reader);
+						currentSymbol = GetNextChar();
 					} while (char.IsDigit(currentSymbol));
-					token.Type = TokenConstants.Type.Number;
-					token.Value = value.ToString();
+					return new TokenModel(value.ToString(), TokenConstants.Type.Number);
 				}
 				else if (char.IsLetter(currentSymbol))
 				{
@@ -55,57 +68,53 @@ namespace CouseWork.musiccompiler.Controller
 					do
 					{
 						sb.Append(currentSymbol);
-					} while (char.IsLetter(currentSymbol = GetNextChar(reader)));
+						if (TokenConstants.Notes.Contains(sb.ToString()))
+						{
+							return new TokenModel(sb.ToString(), TokenConstants.Type.Note);
+						}
+					} while (char.IsLetterOrDigit(currentSymbol = GetNextChar()));
 
-					if (TokenConstants.Identificators.ContainsKey(sb.ToString()))
+					if (TokenConstants.Identificators.Contains(sb.ToString()))
 					{
-						token.Type = TokenConstants.Type.Identificator;
-						token.Value = sb.ToString();
+						return new TokenModel(sb.ToString(), TokenConstants.Type.Identificator);
 					}
 					else
 					{
-						token.Type = TokenConstants.Type.Error;
-						token.Value = "Unexpected token";
+						return new TokenModel("Unexpected token", TokenConstants.Type.Error);
 //						TODO lexer error		
 					}
 				}
 				else if (currentSymbol.Equals(TokenConstants.VariableStarter))
 				{
 					var sb = new StringBuilder();
-					currentSymbol = GetNextChar(reader);
+					currentSymbol = GetNextChar();
 					if (char.IsLetter(currentSymbol))
 					{
 						do
 						{
 							sb.Append(currentSymbol);
-						} while (char.IsLetterOrDigit(currentSymbol = GetNextChar(reader)));
-						if (sb.Length < 24)
+						} while (char.IsLetterOrDigit(currentSymbol = GetNextChar()));
+						if (sb.Length < TokenConstants.VariableMaxLenght)
 						{
-							token.Type = TokenConstants.Type.Variable;
-							token.Value = sb.ToString();
+							return new TokenModel(sb.ToString(), TokenConstants.Type.Variable);
 						}
 						else
 						{
-							token.Type = TokenConstants.Type.Error;
-							token.Value = "Too long variable name";
+							return new TokenModel("Too long variable name", TokenConstants.Type.Error);
 						}
 					}
 					else
 					{
-						token.Type = TokenConstants.Type.Error;
-						token.Value = "Wrong variable name";
+						return new TokenModel("Wrong variable name", TokenConstants.Type.Error);
 //						TODO lexer error
 					}
 				}
 				else
 				{
-					token.Type = TokenConstants.Type.Error;
-					token.Value = "Wrong Token";
+					return new TokenModel("Wrong token", TokenConstants.Type.Error);
 //					TODO lexer error
 				}
 			}
-			reader.Close();
-			return token;
 		}
 	}
 }
