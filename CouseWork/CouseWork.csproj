@@ -74,7 +74,7 @@
     <Compile Include="musiccompiler\Controller\Lexer.cs" />
     <Compile Include="musiccompiler\Api\TokenConstants.cs" />
     <Compile Include="musiccompiler\Controller\Parser.cs" />
-    <Compile Include="musiccompiler\Api\ANode.cs" />
+    <Compile Include="musiccompiler\Api\Node.cs" />
     <Compile Include="musiccompiler\Model\Node\IdentificatorNode.cs" />
     <Compile Include="musiccompiler\Model\Node\MelodyNode.cs" />
     <Compile Include="musiccompiler\Model\Node\NumberNode.cs" />

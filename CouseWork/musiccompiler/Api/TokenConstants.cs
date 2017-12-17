@@ -37,7 +37,8 @@ namespace CouseWork.musiccompiler.Api
 			Note,
 			Line,
 			Identificator,
-			Variable
+			Variable,
+			Final
 		}
 	}
 }

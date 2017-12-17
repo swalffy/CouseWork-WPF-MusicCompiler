@@ -3,13 +3,13 @@ using static CouseWork.musiccompiler.Api.Identificator;
 
 namespace CouseWork.musiccompiler.Model.Node
 {
-	public class IdentificatorNode : ANode
+	public class IdentificatorNode : Api.Node
 	{
-		private Identificator _identificator;
+		public Identificator Identificator { get; }
 
 		public IdentificatorNode(Identificator identificator)
 		{
-			_identificator = identificator;
+			Identificator = identificator;
 		}
 	}
 }

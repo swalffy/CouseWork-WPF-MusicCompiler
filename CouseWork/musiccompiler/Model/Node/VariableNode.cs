@@ -2,7 +2,7 @@
 
 namespace CouseWork.musiccompiler.Model.Node
 {
-	public class VariableNode : ANode
+	public class VariableNode : Api.Node
 	{
 		public string Name { get; }
 

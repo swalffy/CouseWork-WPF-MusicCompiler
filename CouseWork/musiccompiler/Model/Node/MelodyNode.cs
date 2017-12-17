@@ -4,7 +4,7 @@ using CouseWork.musiccompiler.Api;
 
 namespace CouseWork.musiccompiler.Model.Node
 {
-	public class MelodyNode : ANode
+	public class MelodyNode : Api.Node
 	{
 		public List<Token> Notes { get; }
 

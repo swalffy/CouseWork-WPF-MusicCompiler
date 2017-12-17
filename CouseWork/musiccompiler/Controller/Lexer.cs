@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Model;
@@ -7,7 +9,7 @@ namespace CouseWork.musiccompiler.Controller
 {
 	public class Lexer
 	{
-		private const char NewLineChar = '\n';
+		private const char FinalCodeChar = '>';
 
 		private readonly string _code;
 
@@ -18,7 +20,7 @@ namespace CouseWork.musiccompiler.Controller
 		public Lexer(string code)
 		{
 			_index = 0;
-			_code = code;
+			_code = code + '\n';
 			_currentCharacter = GetNextChar();
 		}
 
@@ -30,8 +32,19 @@ namespace CouseWork.musiccompiler.Controller
 			}
 			catch (IndexOutOfRangeException)
 			{
-				return NewLineChar;
+				return FinalCodeChar;
 			}
+		}
+
+		public List<Token> GetTokens()
+		{
+			List<Token> response = new List<Token>();
+			Token token;
+			while ((token = GetNextToken()).Type != TokenConstants.Type.Final )
+			{
+				response.Add(token);
+			}
+			return response;
 		}
 
 		public Token GetNextToken()
@@ -46,8 +59,13 @@ namespace CouseWork.musiccompiler.Controller
 				{
 					_currentCharacter = GetNextChar();
 				}
+				else if (_currentCharacter == FinalCodeChar)
+				{
+					return new Token(null, TokenConstants.Type.Final);
+				}
 				else if (_currentCharacter == TokenConstants.Line)
 				{
+					_currentCharacter = GetNextChar();
 					return new Token(TokenConstants.Line.ToString(), TokenConstants.Type.Line);
 				}
 				else if (char.IsDigit(_currentCharacter))

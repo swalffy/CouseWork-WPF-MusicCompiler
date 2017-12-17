@@ -1,4 +1,5 @@
-﻿using CouseWork.musiccompiler.Api;
+﻿using System.Text;
+using CouseWork.musiccompiler.Api;
 
 namespace CouseWork.musiccompiler.Model
 {
@@ -12,6 +13,11 @@ namespace CouseWork.musiccompiler.Model
 		{
 			Type = type;
 			Value = value;
+		}
+
+		public override string ToString()
+		{
+		return $"Token : {Type} - {Value}";
 		}
 	}
 }
