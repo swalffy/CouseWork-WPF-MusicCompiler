@@ -35,7 +35,7 @@ namespace CouseWork.musiccompiler.Api
 			Error,
 			Number,
 			Note,
-			Symbol,
+			Line,
 			Identificator,
 			Variable
 		}

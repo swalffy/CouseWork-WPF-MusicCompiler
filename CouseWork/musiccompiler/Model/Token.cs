@@ -2,13 +2,13 @@
 
 namespace CouseWork.musiccompiler.Model
 {
-	public class TokenModel
+	public class Token
 	{
 		public TokenConstants.Type Type { get; }
 
 		public string Value { get; }
 
-		public TokenModel(string value, TokenConstants.Type type)
+		public Token(string value, TokenConstants.Type type)
 		{
 			Type = type;
 			Value = value;

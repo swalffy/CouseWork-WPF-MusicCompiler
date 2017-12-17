@@ -32,7 +32,7 @@ namespace CouseWork.musiccompiler.Controller
 			return (char) _reader.Read();
 		}
 
-		public TokenModel GetNextToken()
+		public Token GetNextToken()
 		{
 			var currentSymbol = GetNextChar();
 
@@ -40,7 +40,7 @@ namespace CouseWork.musiccompiler.Controller
 			{
 				if (_reader == null)
 				{
-					return new TokenModel("EmptyLine", TokenConstants.Type.Error);
+					return new Token("EmptyLine", TokenConstants.Type.Error);
 				}
 				else if (currentSymbol == ' ')
 				{
@@ -48,7 +48,7 @@ namespace CouseWork.musiccompiler.Controller
 				}
 				else if (currentSymbol == TokenConstants.Line)
 				{
-					return new TokenModel("line", TokenConstants.Type.Symbol);
+					return new Token("line", TokenConstants.Type.Line);
 				}
 				else if (char.IsDigit(currentSymbol))
 				{
@@ -59,7 +59,7 @@ namespace CouseWork.musiccompiler.Controller
 						value = value * 10 + int.Parse(currentSymbol.ToString());
 						currentSymbol = GetNextChar();
 					} while (char.IsDigit(currentSymbol));
-					return new TokenModel(value.ToString(), TokenConstants.Type.Number);
+					return new Token(value.ToString(), TokenConstants.Type.Number);
 				}
 				else if (char.IsLetter(currentSymbol))
 				{
@@ -69,17 +69,17 @@ namespace CouseWork.musiccompiler.Controller
 						sb.Append(currentSymbol);
 						if (TokenConstants.Notes.Contains(sb.ToString()))
 						{
-							return new TokenModel(sb.ToString(), TokenConstants.Type.Note);
+							return new Token(sb.ToString(), TokenConstants.Type.Note);
 						}
 					} while (char.IsLetterOrDigit(currentSymbol = GetNextChar()));
 
 					if (TokenConstants.Identificators.Contains(sb.ToString()))
 					{
-						return new TokenModel(sb.ToString(), TokenConstants.Type.Identificator);
+						return new Token(sb.ToString(), TokenConstants.Type.Identificator);
 					}
 					else
 					{
-						return new TokenModel("Unexpected token", TokenConstants.Type.Error);
+						return new Token("Unexpected token", TokenConstants.Type.Error);
 //						TODO lexer error		
 					}
 				}
@@ -95,22 +95,22 @@ namespace CouseWork.musiccompiler.Controller
 						} while (char.IsLetterOrDigit(currentSymbol = GetNextChar()));
 						if (sb.Length < TokenConstants.VariableMaxLenght)
 						{
-							return new TokenModel(sb.ToString(), TokenConstants.Type.Variable);
+							return new Token(sb.ToString(), TokenConstants.Type.Variable);
 						}
 						else
 						{
-							return new TokenModel("Too long variable name", TokenConstants.Type.Error);
+							return new Token("Too long variable name", TokenConstants.Type.Error);
 						}
 					}
 					else
 					{
-						return new TokenModel("Wrong variable name", TokenConstants.Type.Error);
+						return new Token("Wrong variable name", TokenConstants.Type.Error);
 //						TODO lexer error
 					}
 				}
 				else
 				{
-					return new TokenModel("Wrong token", TokenConstants.Type.Error);
+					return new Token("Wrong token", TokenConstants.Type.Error);
 //					TODO lexer error
 				}
 			}

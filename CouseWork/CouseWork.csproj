@@ -68,9 +68,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="musiccompiler\Api\ParserConstants.cs" />
     <Compile Include="musiccompiler\Controller\Lexer.cs" />
     <Compile Include="musiccompiler\Api\TokenConstants.cs" />
-    <Compile Include="musiccompiler\Model\TokenModel.cs" />
+    <Compile Include="musiccompiler\Controller\Parser.cs" />
+    <Compile Include="musiccompiler\Api\ANode.cs" />
+    <Compile Include="musiccompiler\Model\Node\IdentificatorNode.cs" />
+    <Compile Include="musiccompiler\Model\Node\MelodyNode.cs" />
+    <Compile Include="musiccompiler\Model\Node\NumberNode.cs" />
+    <Compile Include="musiccompiler\Model\Token.cs" />
+    <Compile Include="musiccompiler\Model\Node\VariableNode.cs" />
     <Compile Include="musiccompiler\Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
