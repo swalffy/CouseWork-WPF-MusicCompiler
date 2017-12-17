@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using CouseWork.musiccompiler.Api;
 
-namespace CouseWork.musiccompiler.Model
+namespace CouseWork.musiccompiler.Api
 {
 	public abstract class ANode
 	{

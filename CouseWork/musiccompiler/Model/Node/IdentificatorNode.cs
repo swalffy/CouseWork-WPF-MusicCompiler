@@ -1,4 +1,5 @@
-﻿using static CouseWork.musiccompiler.Api.ParserConstants;
+﻿using CouseWork.musiccompiler.Api;
+using static CouseWork.musiccompiler.Api.Identificator;
 
 namespace CouseWork.musiccompiler.Model.Node
 {

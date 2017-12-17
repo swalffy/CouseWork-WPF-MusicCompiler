@@ -1,4 +1,6 @@
-﻿namespace CouseWork.musiccompiler.Model.Node
+﻿using CouseWork.musiccompiler.Api;
+
+namespace CouseWork.musiccompiler.Model.Node
 {
 	public class VariableNode : ANode
 	{

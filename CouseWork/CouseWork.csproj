@@ -68,6 +68,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="musiccompiler\Api\Identificator.cs" />
+    <Compile Include="musiccompiler\Api\Note.cs" />
     <Compile Include="musiccompiler\Api\ParserConstants.cs" />
     <Compile Include="musiccompiler\Controller\Lexer.cs" />
     <Compile Include="musiccompiler\Api\TokenConstants.cs" />

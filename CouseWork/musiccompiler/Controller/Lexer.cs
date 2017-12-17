@@ -48,7 +48,7 @@ namespace CouseWork.musiccompiler.Controller
 				}
 				else if (currentSymbol == TokenConstants.Line)
 				{
-					return new Token("line", TokenConstants.Type.Line);
+					return new Token(TokenConstants.Line.ToString(), TokenConstants.Type.Line);
 				}
 				else if (char.IsDigit(currentSymbol))
 				{
@@ -67,13 +67,13 @@ namespace CouseWork.musiccompiler.Controller
 					do
 					{
 						sb.Append(currentSymbol);
-						if (TokenConstants.Notes.Contains(sb.ToString()))
+						if (TokenConstants.Notes.ContainsValue(sb.ToString()))
 						{
 							return new Token(sb.ToString(), TokenConstants.Type.Note);
 						}
 					} while (char.IsLetterOrDigit(currentSymbol = GetNextChar()));
 
-					if (TokenConstants.Identificators.Contains(sb.ToString()))
+					if (TokenConstants.Identificators.ContainsValue(sb.ToString()))
 					{
 						return new Token(sb.ToString(), TokenConstants.Type.Identificator);
 					}

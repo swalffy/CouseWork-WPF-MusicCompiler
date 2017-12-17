@@ -23,22 +23,22 @@ namespace CouseWork.musiccompiler.Controller
 			switch (token.Type)
 			{
 				case TokenConstants.Type.Identificator:
-					switch (token.Value)
+					if (token.Value.Equals(TokenConstants.Identificators[Identificator.Repeat]))
 					{
-						case "repeat":
-							node = new IdentificatorNode(ParserConstants.Identificator.Repeat);
+						node = new IdentificatorNode(Identificator.Repeat);
 //							TODO end repeat statement
-							node.AddChild(Statement());
-							node.AddChild(Statement());
-							break;
-						case "sleep":
-							break;
-						case "thread":
-							break;
+						node.AddChild(Statement());
+						node.AddChild(Statement());
+					}
+					else if (token.Value.Equals(TokenConstants.Identificators[Identificator.Sleep]))
+					{
+					}
+					else if (token.Value.Equals(TokenConstants.Identificators[Identificator.Thread]))
+					{
 					}
 					break;
 				case TokenConstants.Type.Note:
-					node = GetSequenceOfNotes(token);
+					node = ParseNotes(token);
 					break;
 				case TokenConstants.Type.Variable:
 					node = new VariableNode(token.Value);
@@ -51,7 +51,7 @@ namespace CouseWork.musiccompiler.Controller
 			return node;
 		}
 
-		private static MelodyNode GetSequenceOfNotes(Token token)
+		private static MelodyNode ParseNotes(Token token)
 		{
 			MelodyNode melody = new MelodyNode();
 			do
