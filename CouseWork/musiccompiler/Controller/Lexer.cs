@@ -1,112 +1,66 @@
-﻿using System.IO;
+﻿using System;
 using System.Text;
 using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Model;
-using CouseWork.musiccompiler.utils;
 
 namespace CouseWork.musiccompiler.Controller
 {
 	public class Lexer
 	{
-		private readonly StreamReader _reader;
+		private const char NewLineChar = '\n';
 
-		public Lexer(string line)
+		private readonly string _code;
+
+		private int _index;
+
+		private char _currentCharacter;
+
+		public Lexer(string code)
 		{
-			if (string.IsNullOrEmpty(line))
-			{
-				_reader = StreamReader.Null;
-			}
-			else
-			{
-				_reader = Utils.GetStreamFromString(line);
-			}
+			_index = 0;
+			_code = code;
+			_currentCharacter = GetNextChar();
 		}
 
-		~Lexer()
+		public char GetNextChar()
 		{
-			_reader.Close();
-		}
-
-		private char GetNextChar()
-		{
-			return (char) _reader.Read();
+			try
+			{
+				return _code[_index++];
+			}
+			catch (IndexOutOfRangeException)
+			{
+				return NewLineChar;
+			}
 		}
 
 		public Token GetNextToken()
 		{
-			var currentSymbol = GetNextChar();
-
 			while (true)
 			{
-				if (_reader == null)
+				if (string.IsNullOrEmpty(_code))
 				{
 					return new Token("EmptyLine", TokenConstants.Type.Error);
 				}
-				else if (currentSymbol == ' ')
+				else if (_currentCharacter == ' ')
 				{
-					currentSymbol = GetNextChar();
+					_currentCharacter = GetNextChar();
 				}
-				else if (currentSymbol == TokenConstants.Line)
+				else if (_currentCharacter == TokenConstants.Line)
 				{
 					return new Token(TokenConstants.Line.ToString(), TokenConstants.Type.Line);
 				}
-				else if (char.IsDigit(currentSymbol))
+				else if (char.IsDigit(_currentCharacter))
 				{
-					int value = 0;
-
-					do
-					{
-						value = value * 10 + int.Parse(currentSymbol.ToString());
-						currentSymbol = GetNextChar();
-					} while (char.IsDigit(currentSymbol));
-					return new Token(value.ToString(), TokenConstants.Type.Number);
+					return ParseNumberToken();
 				}
-				else if (char.IsLetter(currentSymbol))
+				else if (char.IsLetter(_currentCharacter))
 				{
-					var sb = new StringBuilder();
-					do
-					{
-						sb.Append(currentSymbol);
-						if (TokenConstants.Notes.ContainsValue(sb.ToString()))
-						{
-							return new Token(sb.ToString(), TokenConstants.Type.Note);
-						}
-					} while (char.IsLetterOrDigit(currentSymbol = GetNextChar()));
-
-					if (TokenConstants.Identificators.ContainsValue(sb.ToString()))
-					{
-						return new Token(sb.ToString(), TokenConstants.Type.Identificator);
-					}
-					else
-					{
-						return new Token("Unexpected token", TokenConstants.Type.Error);
-//						TODO lexer error		
-					}
+					return NoteAndIdentifireParse();
 				}
-				else if (currentSymbol.Equals(TokenConstants.VariableStarter))
+				else if (_currentCharacter.Equals(TokenConstants.VariableStarter))
 				{
-					var sb = new StringBuilder();
-					currentSymbol = GetNextChar();
-					if (char.IsLetter(currentSymbol))
-					{
-						do
-						{
-							sb.Append(currentSymbol);
-						} while (char.IsLetterOrDigit(currentSymbol = GetNextChar()));
-						if (sb.Length < TokenConstants.VariableMaxLenght)
-						{
-							return new Token(sb.ToString(), TokenConstants.Type.Variable);
-						}
-						else
-						{
-							return new Token("Too long variable name", TokenConstants.Type.Error);
-						}
-					}
-					else
-					{
-						return new Token("Wrong variable name", TokenConstants.Type.Error);
-//						TODO lexer error
-					}
+					return VariableParse();
 				}
 				else
 				{
@@ -114,6 +68,68 @@ namespace CouseWork.musiccompiler.Controller
 //					TODO lexer error
 				}
 			}
+		}
+
+		private Token VariableParse()
+		{
+			var sb = new StringBuilder();
+			_currentCharacter = GetNextChar();
+			if (char.IsLetter(_currentCharacter))
+			{
+				do
+				{
+					sb.Append(_currentCharacter);
+				} while (char.IsLetterOrDigit(_currentCharacter = GetNextChar()));
+				if (sb.Length < TokenConstants.VariableMaxLenght)
+				{
+					return new Token(sb.ToString(), TokenConstants.Type.Variable);
+				}
+				else
+				{
+					return new Token("Too long variable name", TokenConstants.Type.Error);
+				}
+			}
+			else
+			{
+				return new Token("Wrong variable name", TokenConstants.Type.Error);
+//						TODO lexer error
+			}
+		}
+
+		private Token NoteAndIdentifireParse()
+		{
+			var sb = new StringBuilder();
+			do
+			{
+				sb.Append(_currentCharacter);
+				if (TokenConstants.Notes.ContainsValue(sb.ToString()))
+				{
+					_currentCharacter = GetNextChar();
+					return new Token(sb.ToString(), TokenConstants.Type.Note);
+				}
+			} while (char.IsLetterOrDigit(_currentCharacter = GetNextChar()));
+
+			if (TokenConstants.Identificators.ContainsValue(sb.ToString()))
+			{
+				return new Token(sb.ToString(), TokenConstants.Type.Identificator);
+			}
+			else
+			{
+				return new Token("Unexpected token", TokenConstants.Type.Error);
+//						TODO lexer error		
+			}
+		}
+
+		private Token ParseNumberToken()
+		{
+			int value = 0;
+
+			do
+			{
+				value = value * 10 + int.Parse(_currentCharacter.ToString());
+				_currentCharacter = GetNextChar();
+			} while (char.IsDigit(_currentCharacter));
+			return new Token(value.ToString(), TokenConstants.Type.Number);
 		}
 	}
 }

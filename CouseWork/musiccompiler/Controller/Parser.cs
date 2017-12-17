@@ -39,6 +39,7 @@ namespace CouseWork.musiccompiler.Controller
 					break;
 				case TokenConstants.Type.Note:
 					node = ParseNotes(token);
+
 					break;
 				case TokenConstants.Type.Variable:
 					node = new VariableNode(token.Value);

@@ -27,7 +27,7 @@ namespace Tests
 			Assert.AreEqual("Var", actualVariableName);
 			Assert.AreEqual(2, actualCountOfRepetitions);
 
-			inputString = "repeat n1n2n3 8";
+			inputString = "repeat n1n2n3 8 \n repeat #Var 2";
 			actual = Parser.Parse(inputString);
 
 			actualList = actual.Children;
