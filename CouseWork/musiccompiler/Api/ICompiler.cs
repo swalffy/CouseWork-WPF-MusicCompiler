@@ -2,8 +2,8 @@
 
 namespace CouseWork.musiccompiler.Api
 {
-	public interface IExecutor
+	public interface ICompiler
 	{
-		List<Note> Execute();
+		List<INote> Compile();
 	}
 }

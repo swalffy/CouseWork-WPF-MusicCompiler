@@ -2,6 +2,7 @@
 using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Model;
 using CouseWork.musiccompiler.Model.Node;
+using CouseWork.musiccompiler.Utils;
 
 namespace CouseWork.musiccompiler.Controller
 {
@@ -35,8 +36,8 @@ namespace CouseWork.musiccompiler.Controller
 			Node temp;
 			switch (token.Type)
 			{
-				case TokenConstants.Type.Identificator:
-					if (token.Value.Equals(TokenConstants.Identificators[Identificator.Repeat]))
+				case Constants.TokenType.Identificator:
+					if (token.Value.Equals(Constants.Identificators[Identificator.Repeat]))
 					{
 						node = new IdentificatorNode(Identificator.Repeat);
 						temp = Statement();
@@ -58,7 +59,7 @@ namespace CouseWork.musiccompiler.Controller
 							node.AddChild(new ErrorNode("Number value requered"));
 						}
 					}
-					else if (token.Value.Equals(TokenConstants.Identificators[Identificator.Sleep]))
+					else if (token.Value.Equals(Constants.Identificators[Identificator.Sleep]))
 					{
 						node = new IdentificatorNode(Identificator.Sleep);
 						temp = Statement();
@@ -71,7 +72,7 @@ namespace CouseWork.musiccompiler.Controller
 							node.AddChild(new ErrorNode("Number value requered"));
 						}
 					}
-					else if (token.Value.Equals(TokenConstants.Identificators[Identificator.Thread]))
+					else if (token.Value.Equals(Constants.Identificators[Identificator.Thread]))
 					{
 						node = new IdentificatorNode(Identificator.Thread);
 						do
@@ -85,17 +86,29 @@ namespace CouseWork.musiccompiler.Controller
 							{
 								node.AddChild(new ErrorNode("Variable requered"));
 							}
-						} while (ListOfTokens[Index].Type != TokenConstants.Type.Line);
+						} while (ListOfTokens[Index].Type != Constants.TokenType.Line);
 					}
 					break;
-				case TokenConstants.Type.Note:
+				case Constants.TokenType.Note:
 					node = ParseNotes();
 					break;
-				case TokenConstants.Type.Variable:
+				case Constants.TokenType.Variable:
+					if (!VariableMemory.Contains(token.Value))
+					{
+						if (ListOfTokens[Index].Type == Constants.TokenType.Note)
+						{
+							MelodyNode melody = ((MelodyNode) Statement());
+							VariableMemory.Add(token.Value, melody);
+							break;
+						}
+						else
+						{
+							node = new ErrorNode("No such variable");
+						}
+					}
 					node = new VariableNode(token.Value);
-
 					break;
-				case TokenConstants.Type.Number:
+				case Constants.TokenType.Number:
 					node = new NumberNode(int.Parse(token.Value));
 					break;
 			}
@@ -107,7 +120,8 @@ namespace CouseWork.musiccompiler.Controller
 		{
 			MelodyNode melody = new MelodyNode();
 			Token token = ListOfTokens[Index++ - 1];
-			while (token.Type == TokenConstants.Type.Note)
+
+			while (token.Type == Constants.TokenType.Note)
 			{
 				melody.AddNote(token);
 				token = ListOfTokens[Index++ - 1];

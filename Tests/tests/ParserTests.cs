@@ -1,6 +1,7 @@
 ﻿using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Controller;
 using CouseWork.musiccompiler.Model.Node;
+using CouseWork.musiccompiler.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.tests
@@ -13,10 +14,10 @@ namespace Tests.tests
 		{
 //			TODO fix test
 			string inputString = "#Var n1n2n3";
-			Node actual = Parser.Parse(inputString).Children[0];
+			Parser.Parse(inputString);
 
-			MelodyNode melody = actual.Children[0] as MelodyNode;
-
+			Assert.IsTrue(VariableMemory.Contains("Var"));
+			MelodyNode melody = VariableMemory.GetRecord("Var");
 			Assert.AreEqual("n1", melody.Notes[0].Value);
 			Assert.AreEqual("n2", melody.Notes[1].Value);
 			Assert.AreEqual("n3", melody.Notes[2].Value);
@@ -25,7 +26,8 @@ namespace Tests.tests
 		[TestMethod]
 		public void RepeatParser()
 		{
-			string inputString = "repeat #Var 2";
+//		TODO funny bug is here
+			string inputString = "#Var n2n1n3 \n repeat #Var 2";
 			Node root = Parser.Parse(inputString);
 
 			Node actual = root.Children[0];
@@ -39,7 +41,7 @@ namespace Tests.tests
 			Assert.AreEqual("Var", actualVariableName);
 			Assert.AreEqual(2, actualCountOfRepetitions);
 
-			inputString = "repeat n1n2n3 8 \n repeat #vari 5";
+			inputString = "#vari n2n1 \n repeat n1n2n3 8 \n repeat #vari 5";
 			root = Parser.Parse(inputString);
 
 			actual = root.Children[0];
@@ -80,20 +82,21 @@ namespace Tests.tests
 		[TestMethod]
 		public void ThreadParser()
 		{
-			string inputString = "thread #abc #adb #qwe";
-			Node actual = Parser.Parse(inputString).Children[0];
+			string inputString = "#abc n1 \n #adb n2 \n #qwe n3 \n thread #abc #adb #qwe";
+			Node root = Parser.Parse(inputString);
 
-			VariableNode actualVar1 = actual.Children[0] as VariableNode;
-			VariableNode actualVar2 = actual.Children[1] as VariableNode;
-			VariableNode actualVar3 = actual.Children[2] as VariableNode;
+			var actual = root.Children[0];
+			var actualVar1 = actual.Children[0] as VariableNode;
+			var actualVar2 = actual.Children[1] as VariableNode;
+			var actualVar3 = actual.Children[2] as VariableNode;
 
-			string var1 = actualVar1.Name;
-			string var2 = actualVar2.Name;
-			string var3 = actualVar3.Name;
+			Assert.IsTrue(VariableMemory.Contains("abc"));
+			Assert.IsTrue(VariableMemory.Contains("adb"));
+			Assert.IsTrue(VariableMemory.Contains("qwe"));
 
-			Assert.AreEqual("abc", var1);
-			Assert.AreEqual("adb", var2);
-			Assert.AreEqual("qwe", var3);
+			Assert.AreEqual("n1", VariableMemory.GetRecord("abc").Notes[0].Value);
+			Assert.AreEqual("n2", VariableMemory.GetRecord("adb").Notes[0].Value);
+			Assert.AreEqual("n3", VariableMemory.GetRecord("qwe").Notes[0].Value);
 		}
 
 

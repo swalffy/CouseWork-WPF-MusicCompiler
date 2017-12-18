@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using CouseWork.musiccompiler.Api;
+using CouseWork.musiccompiler.Utils;
 
 namespace CouseWork.musiccompiler.Model.Node
 {
@@ -16,12 +17,12 @@ namespace CouseWork.musiccompiler.Model.Node
 			Notes.Add(node);
 		}
 
-		public override List<Note> Execute()
+		public override List<INote> Compile()
 		{
-			List<Note> melody = new List<Note>();
+			List<INote> melody = new List<INote>();
 			foreach (var token in Notes)
 			{
-				melody.Add(TokenConstants.Notes[token.Value]);
+				melody.Add(new NoteClass(Constants.Notes[token.Value]));
 			}
 			return melody;
 		}

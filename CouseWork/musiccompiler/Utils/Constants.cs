@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using CouseWork.musiccompiler.Api;
 
-namespace CouseWork.musiccompiler.Api
+namespace CouseWork.musiccompiler.Utils
 {
-	public static class TokenConstants
+	public static class Constants
 	{
-		public const char VariableStarter = '#';
+		public const char VariableStarterSymbol = '#';
 
 		public const int VariableMaxLenght = 16;
 
-		public static char Line { get; } = '\n';
+		public static char EndCommandSymbol { get; } = '\n';
 
 		public static Dictionary<string, Note> Notes { get; } = new Dictionary<string, Note>()
 		{
@@ -29,7 +30,7 @@ namespace CouseWork.musiccompiler.Api
 			{Identificator.Thread, "thread"},
 		};
 
-		public enum Type
+		public enum TokenType
 		{
 			Nullable,
 			Error,

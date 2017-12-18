@@ -1,15 +1,16 @@
 ﻿using System.Text;
 using CouseWork.musiccompiler.Api;
+using CouseWork.musiccompiler.Utils;
 
 namespace CouseWork.musiccompiler.Model
 {
 	public class Token
 	{
-		public TokenConstants.Type Type { get; }
+		public Constants.TokenType Type { get; }
 
 		public string Value { get; }
 
-		public Token(string value, TokenConstants.Type type)
+		public Token(string value, Constants.TokenType type)
 		{
 			Type = type;
 			Value = value;

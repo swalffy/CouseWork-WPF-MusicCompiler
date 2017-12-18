@@ -1,5 +1,5 @@
-﻿using CouseWork.musiccompiler.Api;
-using CouseWork.musiccompiler.Controller;
+﻿using CouseWork.musiccompiler.Controller;
+using CouseWork.musiccompiler.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.tests
@@ -17,7 +17,7 @@ namespace Tests.tests
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Note, actualType);
+			Assert.AreEqual(Constants.TokenType.Note, actualType);
 			Assert.AreEqual(actualToken, actualValue);
 		}
 
@@ -32,14 +32,14 @@ namespace Tests.tests
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Note, actualType);
+			Assert.AreEqual(Constants.TokenType.Note, actualType);
 			Assert.AreEqual(actualToken[0].ToString() + actualToken[1].ToString(), actualValue);
 
 			actualModel = lexer.GetNextToken();
 			actualType = actualModel.Type;
 			actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Note, actualType);
+			Assert.AreEqual(Constants.TokenType.Note, actualType);
 			Assert.AreEqual(actualToken[2].ToString() + actualToken[3].ToString(), actualValue);
 		}
 
@@ -53,7 +53,7 @@ namespace Tests.tests
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Number, actualType);
+			Assert.AreEqual(Constants.TokenType.Number, actualType);
 			Assert.AreEqual(actualToken, actualValue);
 		}
 
@@ -67,7 +67,7 @@ namespace Tests.tests
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Number, actualType);
+			Assert.AreEqual(Constants.TokenType.Number, actualType);
 			Assert.AreEqual(actualToken, actualValue);
 		}
 
@@ -81,7 +81,7 @@ namespace Tests.tests
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Identificator, actualType);
+			Assert.AreEqual(Constants.TokenType.Identificator, actualType);
 			Assert.AreEqual(actualToken, actualValue);
 		}
 
@@ -95,7 +95,7 @@ namespace Tests.tests
 			var actualType = actualModel.Type;
 			var actualValue = actualModel.Value;
 
-			Assert.AreEqual(TokenConstants.Type.Variable, actualType);
+			Assert.AreEqual(Constants.TokenType.Variable, actualType);
 			Assert.AreEqual("Var", actualValue);
 		}
 
@@ -108,7 +108,7 @@ namespace Tests.tests
 
 			var actualType = actualModel.Type;
 
-			Assert.AreEqual(TokenConstants.Type.Error, actualType);
+			Assert.AreEqual(Constants.TokenType.Error, actualType);
 		}
 
 		[TestMethod]
@@ -120,7 +120,7 @@ namespace Tests.tests
 
 			var actualType = actualModel.Type;
 
-			Assert.AreEqual(TokenConstants.Type.Error, actualType);
+			Assert.AreEqual(Constants.TokenType.Error, actualType);
 		}
 	}
 }

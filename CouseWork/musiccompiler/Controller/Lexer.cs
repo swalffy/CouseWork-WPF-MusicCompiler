@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Model;
+using CouseWork.musiccompiler.Utils;
 
 namespace CouseWork.musiccompiler.Controller
 {
@@ -40,7 +41,7 @@ namespace CouseWork.musiccompiler.Controller
 		{
 			List<Token> response = new List<Token>();
 			Token token;
-			while ((token = GetNextToken()).Type != TokenConstants.Type.Final )
+			while ((token = GetNextToken()).Type != Constants.TokenType.Final )
 			{
 				response.Add(token);
 			}
@@ -53,7 +54,7 @@ namespace CouseWork.musiccompiler.Controller
 			{
 				if (string.IsNullOrEmpty(_code))
 				{
-					return new Token("EmptyLine", TokenConstants.Type.Error);
+					return new Token("EmptyLine", Constants.TokenType.Error);
 				}
 				else if (_currentCharacter == ' ')
 				{
@@ -61,12 +62,12 @@ namespace CouseWork.musiccompiler.Controller
 				}
 				else if (_currentCharacter == FinalCodeChar)
 				{
-					return new Token(null, TokenConstants.Type.Final);
+					return new Token(null, Constants.TokenType.Final);
 				}
-				else if (_currentCharacter == TokenConstants.Line)
+				else if (_currentCharacter == Constants.EndCommandSymbol)
 				{
 					_currentCharacter = GetNextChar();
-					return new Token(TokenConstants.Line.ToString(), TokenConstants.Type.Line);
+					return new Token(Constants.EndCommandSymbol.ToString(), Constants.TokenType.Line);
 				}
 				else if (char.IsDigit(_currentCharacter))
 				{
@@ -76,13 +77,13 @@ namespace CouseWork.musiccompiler.Controller
 				{
 					return NoteAndIdentifireParse();
 				}
-				else if (_currentCharacter.Equals(TokenConstants.VariableStarter))
+				else if (_currentCharacter.Equals(Constants.VariableStarterSymbol))
 				{
 					return VariableParse();
 				}
 				else
 				{
-					return new Token("Wrong token", TokenConstants.Type.Error);
+					return new Token("Wrong token", Constants.TokenType.Error);
 //					TODO lexer error
 				}
 			}
@@ -98,18 +99,18 @@ namespace CouseWork.musiccompiler.Controller
 				{
 					sb.Append(_currentCharacter);
 				} while (char.IsLetterOrDigit(_currentCharacter = GetNextChar()));
-				if (sb.Length < TokenConstants.VariableMaxLenght)
+				if (sb.Length < Constants.VariableMaxLenght)
 				{
-					return new Token(sb.ToString(), TokenConstants.Type.Variable);
+					return new Token(sb.ToString(), Constants.TokenType.Variable);
 				}
 				else
 				{
-					return new Token("Too long variable name", TokenConstants.Type.Error);
+					return new Token("Too long variable name", Constants.TokenType.Error);
 				}
 			}
 			else
 			{
-				return new Token("Wrong variable name", TokenConstants.Type.Error);
+				return new Token("Wrong variable name", Constants.TokenType.Error);
 //						TODO lexer error
 			}
 		}
@@ -120,20 +121,20 @@ namespace CouseWork.musiccompiler.Controller
 			do
 			{
 				sb.Append(_currentCharacter);
-				if (TokenConstants.Notes.ContainsKey(sb.ToString()))
+				if (Constants.Notes.ContainsKey(sb.ToString()))
 				{
 					_currentCharacter = GetNextChar();
-					return new Token(sb.ToString(), TokenConstants.Type.Note);
+					return new Token(sb.ToString(), Constants.TokenType.Note);
 				}
 			} while (char.IsLetterOrDigit(_currentCharacter = GetNextChar()));
 
-			if (TokenConstants.Identificators.ContainsValue(sb.ToString()))
+			if (Constants.Identificators.ContainsValue(sb.ToString()))
 			{
-				return new Token(sb.ToString(), TokenConstants.Type.Identificator);
+				return new Token(sb.ToString(), Constants.TokenType.Identificator);
 			}
 			else
 			{
-				return new Token("Unexpected token", TokenConstants.Type.Error);
+				return new Token("Unexpected token", Constants.TokenType.Error);
 //						TODO lexer error		
 			}
 		}
@@ -147,7 +148,7 @@ namespace CouseWork.musiccompiler.Controller
 				value = value * 10 + int.Parse(_currentCharacter.ToString());
 				_currentCharacter = GetNextChar();
 			} while (char.IsDigit(_currentCharacter));
-			return new Token(value.ToString(), TokenConstants.Type.Number);
+			return new Token(value.ToString(), Constants.TokenType.Number);
 		}
 	}
 }

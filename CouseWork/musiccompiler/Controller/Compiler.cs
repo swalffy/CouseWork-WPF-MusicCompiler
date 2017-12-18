@@ -33,10 +33,9 @@ namespace CouseWork.musiccompiler.Controller
 		{
 			VirtualMachine vm = new VirtualMachine();
 			_rootNode = Parser.Parse(code);
-			List<Note> melody = new List<Note>();
 			foreach (var rootNodeChild in _rootNode.Children)
 			{
-				melody.AddRange(rootNodeChild.Execute());
+				vm.Add(rootNodeChild.Compile());
 			}
 			return vm;
 		}

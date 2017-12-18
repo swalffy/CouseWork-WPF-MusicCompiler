@@ -13,10 +13,10 @@ namespace CouseWork.musiccompiler.Model.Node
 			Error = error;
 		}
 
-		public override List<Note> Execute()
+		public override List<INote> Compile()
 		{
 //			TODO errors
-			return base.Execute();
+			return base.Compile();
 		}
 	}
 }

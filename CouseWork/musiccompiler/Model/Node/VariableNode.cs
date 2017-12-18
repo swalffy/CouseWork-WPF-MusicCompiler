@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CouseWork.musiccompiler.Api;
+using CouseWork.musiccompiler.Utils;
 
 namespace CouseWork.musiccompiler.Model.Node
 {
@@ -12,12 +13,9 @@ namespace CouseWork.musiccompiler.Model.Node
 			Name = name;
 		}
 
-		public override List<Note> Execute()
+		public override List<INote> Compile()
 		{
-			List<Note> melody = new List<Note>();
-//			TODO var impl
-
-			return melody;
+			return VariableMemory.GetRecord(Name).Compile();
 		}
 	}
 }

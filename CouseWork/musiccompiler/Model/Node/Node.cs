@@ -3,7 +3,7 @@ using CouseWork.musiccompiler.Api;
 
 namespace CouseWork.musiccompiler.Model.Node
 {
-	public class Node : IExecutor
+	public class Node : ICompiler
 	{
 		public List<Node> Children { get; }
 
@@ -17,13 +17,12 @@ namespace CouseWork.musiccompiler.Model.Node
 			Children.Add(node);
 		}
 
-
-		public virtual List<Note> Execute()
+		public virtual List<INote> Compile()
 		{
-			List<Note> melody = new List<Note>();
+			List<INote> melody = new List<INote>();
 			foreach (var child in Children)
 			{
-				melody.AddRange(child.Execute());
+				melody.AddRange(child.Compile());
 			}
 			return melody;
 		}
