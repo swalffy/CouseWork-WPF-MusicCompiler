@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using CouseWork.musiccompiler.Api;
 
 namespace CouseWork.musiccompiler.Utils
@@ -10,6 +11,8 @@ namespace CouseWork.musiccompiler.Utils
 		public const int VariableMaxLenght = 16;
 
 		public static char EndCommandSymbol { get; } = '\n';
+
+		public static string ResourceFolder = Path.Combine(System.IO.Path.GetFullPath(@"..\..\..\"), "Resources");
 
 		public static Dictionary<string, ENote> Notes { get; } = new Dictionary<string, ENote>()
 		{

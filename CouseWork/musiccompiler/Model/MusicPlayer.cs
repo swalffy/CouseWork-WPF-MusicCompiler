@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Media;
 using CouseWork.musiccompiler.Api;
 
 namespace CouseWork.musiccompiler.Model
 {
 	public class MusicPlayer
 	{
+		
 		public List<INote> Notes { get; set; }
 
 		public MusicPlayer()
