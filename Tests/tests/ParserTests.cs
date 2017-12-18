@@ -1,15 +1,27 @@
-﻿using System.Collections.Generic;
-using CouseWork.musiccompiler.Api;
+﻿using CouseWork.musiccompiler.Api;
 using CouseWork.musiccompiler.Controller;
-using CouseWork.musiccompiler.Model;
 using CouseWork.musiccompiler.Model.Node;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests
+namespace Tests.tests
 {
 	[TestClass]
 	public class ParserTests
 	{
+		[TestMethod]
+		public void VariableParser()
+		{
+//			TODO fix test
+			string inputString = "#Var n1n2n3";
+			Node actual = Parser.Parse(inputString).Children[0];
+
+			MelodyNode melody = actual.Children[0] as MelodyNode;
+
+			Assert.AreEqual("n1", melody.Notes[0].Value);
+			Assert.AreEqual("n2", melody.Notes[1].Value);
+			Assert.AreEqual("n3", melody.Notes[2].Value);
+		}
+
 		[TestMethod]
 		public void RepeatParser()
 		{
@@ -111,13 +123,12 @@ namespace Tests
 			Assert.AreEqual("abc", ((VariableNode) actualRepeat1.Children[0]).Name);
 			Assert.AreEqual(3, ((NumberNode) actualRepeat1.Children[1]).Value);
 
-			Assert.AreEqual(1, ((NumberNode)actualSleep2.Children[0]).Value);
+			Assert.AreEqual(1, ((NumberNode) actualSleep2.Children[0]).Value);
 
 			Assert.AreEqual(2, actualRepeat2.Children.Count);
 			Assert.AreEqual(2, ((MelodyNode) actualRepeat2.Children[0]).Notes.Count);
 			Assert.AreEqual("n2", ((MelodyNode) actualRepeat2.Children[0]).Notes[0].Value);
 			Assert.AreEqual(2, ((NumberNode) actualRepeat2.Children[1]).Value);
-		
 		}
 	}
 }

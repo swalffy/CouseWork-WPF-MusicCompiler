@@ -2,7 +2,7 @@
 using CouseWork.musiccompiler.Controller;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests
+namespace Tests.tests
 {
 	[TestClass]
 	public class LexerTests
