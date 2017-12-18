@@ -37,9 +37,9 @@ namespace CouseWork.musiccompiler.Controller
 			switch (token.Type)
 			{
 				case Constants.TokenType.Identificator:
-					if (token.Value.Equals(Constants.Identificators[Identificator.Repeat]))
+					if (token.Value.Equals(Constants.Identificators[EIdentificator.Repeat]))
 					{
-						node = new IdentificatorNode(Identificator.Repeat);
+						node = new IdentificatorNode(EIdentificator.Repeat);
 						temp = Statement();
 						if (temp is VariableNode || temp is MelodyNode)
 						{
@@ -59,9 +59,9 @@ namespace CouseWork.musiccompiler.Controller
 							node.AddChild(new ErrorNode("Number value requered"));
 						}
 					}
-					else if (token.Value.Equals(Constants.Identificators[Identificator.Sleep]))
+					else if (token.Value.Equals(Constants.Identificators[EIdentificator.Sleep]))
 					{
-						node = new IdentificatorNode(Identificator.Sleep);
+						node = new IdentificatorNode(EIdentificator.Sleep);
 						temp = Statement();
 						if (temp is NumberNode)
 						{
@@ -72,9 +72,9 @@ namespace CouseWork.musiccompiler.Controller
 							node.AddChild(new ErrorNode("Number value requered"));
 						}
 					}
-					else if (token.Value.Equals(Constants.Identificators[Identificator.Thread]))
+					else if (token.Value.Equals(Constants.Identificators[EIdentificator.Thread]))
 					{
-						node = new IdentificatorNode(Identificator.Thread);
+						node = new IdentificatorNode(EIdentificator.Thread);
 						do
 						{
 							temp = Statement();

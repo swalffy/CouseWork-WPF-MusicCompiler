@@ -69,11 +69,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="musiccompiler\Api\ICompiler.cs" />
-    <Compile Include="musiccompiler\Api\Identificator.cs" />
+    <Compile Include="musiccompiler\Api\EIdentificator.cs" />
     <Compile Include="musiccompiler\Api\INote.cs" />
-    <Compile Include="musiccompiler\Api\Note.cs" />
-    <Compile Include="musiccompiler\Api\NoteClass.cs" />
-    <Compile Include="musiccompiler\Api\NoteComposite.cs" />
+    <Compile Include="musiccompiler\Api\ENote.cs" />
+    <Compile Include="musiccompiler\Model\Note.cs" />
+    <Compile Include="musiccompiler\Model\NoteComposite.cs" />
     <Compile Include="musiccompiler\Controller\Compiler.cs" />
     <Compile Include="musiccompiler\Controller\Lexer.cs" />
     <Compile Include="musiccompiler\Utils\Constants.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="musiccompiler\Model\Node\NumberNode.cs" />
     <Compile Include="musiccompiler\Model\Token.cs" />
     <Compile Include="musiccompiler\Model\Node\VariableNode.cs" />
-    <Compile Include="musiccompiler\Model\VirtualMachine.cs" />
+    <Compile Include="musiccompiler\Model\MusicPlayer.cs" />
     <Compile Include="musiccompiler\Utils\VariableMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

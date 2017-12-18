@@ -22,7 +22,7 @@ namespace CouseWork.musiccompiler.Model.Node
 			List<INote> melody = new List<INote>();
 			foreach (var token in Notes)
 			{
-				melody.Add(new NoteClass(Constants.Notes[token.Value]));
+				melody.Add(new Note(Constants.Notes[token.Value]));
 			}
 			return melody;
 		}

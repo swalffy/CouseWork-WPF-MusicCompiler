@@ -1,6 +1,6 @@
 ﻿namespace CouseWork.musiccompiler.Api
 {
-	public enum Note
+	public enum ENote
 	{
 		N0,
 		N1,

@@ -1,6 +1,6 @@
 ﻿namespace CouseWork.musiccompiler.Api
 {
-	public enum Identificator
+	public enum EIdentificator
 	{
 		Repeat,
 		Sleep,

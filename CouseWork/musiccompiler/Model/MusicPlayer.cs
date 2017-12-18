@@ -3,11 +3,11 @@ using CouseWork.musiccompiler.Api;
 
 namespace CouseWork.musiccompiler.Model
 {
-	public class VirtualMachine
+	public class MusicPlayer
 	{
 		public List<INote> Notes { get; set; }
 
-		public VirtualMachine()
+		public MusicPlayer()
 		{
 			Notes = new List<INote>();
 		}
@@ -22,7 +22,7 @@ namespace CouseWork.musiccompiler.Model
 			Notes.AddRange(notes);
 		}
 
-		public void Execute()
+		public void PlayMusic()
 		{
 			foreach (var note in Notes)
 			{

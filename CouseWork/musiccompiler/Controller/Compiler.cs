@@ -29,9 +29,9 @@ namespace CouseWork.musiccompiler.Controller
 			}
 		}
 
-		public VirtualMachine Compile(string code)
+		public MusicPlayer Compile(string code)
 		{
-			VirtualMachine vm = new VirtualMachine();
+			MusicPlayer vm = new MusicPlayer();
 			_rootNode = Parser.Parse(code);
 			foreach (var rootNodeChild in _rootNode.Children)
 			{

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Windows.Documents;
 using CouseWork.musiccompiler.Api;
-using static CouseWork.musiccompiler.Api.Identificator;
+using static CouseWork.musiccompiler.Api.EIdentificator;
 
 namespace CouseWork.musiccompiler.Model.Node
 {
 	public class IdentificatorNode : Node
 	{
-		public Identificator Identificator { get; }
+		public EIdentificator Identificator { get; }
 
-		public IdentificatorNode(Identificator identificator)
+		public IdentificatorNode(EIdentificator identificator)
 		{
 			Identificator = identificator;
 		}
@@ -32,7 +32,7 @@ namespace CouseWork.musiccompiler.Model.Node
 				case Sleep:
 					for (int i = 0; i < ((NumberNode) Children[0]).Value; i++)
 					{
-						melody.Add(new NoteClass(Note.N0));
+						melody.Add(new Note(ENote.N0));
 					}
 					break;
 				case Thread:
@@ -47,14 +47,14 @@ namespace CouseWork.musiccompiler.Model.Node
 						NoteComposite composite = new NoteComposite();
 						foreach (List<INote> list in compile)
 						{
-							Note note;
+							ENote note;
 							try
 							{
-								note = ((NoteClass) list[i]).Note;
+								note = ((Note) list[i]).Value;
 							}
 							catch (Exception)
 							{
-								note = Note.N0;
+								note = ENote.N0;
 							}
 							composite.Add(note);
 						}
