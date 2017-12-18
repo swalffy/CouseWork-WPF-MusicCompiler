@@ -120,7 +120,7 @@ namespace CouseWork.musiccompiler.Controller
 			do
 			{
 				sb.Append(_currentCharacter);
-				if (TokenConstants.Notes.ContainsValue(sb.ToString()))
+				if (TokenConstants.Notes.ContainsKey(sb.ToString()))
 				{
 					_currentCharacter = GetNextChar();
 					return new Token(sb.ToString(), TokenConstants.Type.Note);

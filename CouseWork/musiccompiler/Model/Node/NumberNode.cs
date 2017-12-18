@@ -2,7 +2,7 @@
 
 namespace CouseWork.musiccompiler.Model.Node
 {
-	public class NumberNode : Api.Node
+	public class NumberNode : Node
 	{
 		public int Value { get; }
 

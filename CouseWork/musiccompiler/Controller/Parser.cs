@@ -32,28 +32,60 @@ namespace CouseWork.musiccompiler.Controller
 		{
 			Token token = ListOfTokens[Index++];
 			Node node = null;
+			Node temp;
 			switch (token.Type)
 			{
 				case TokenConstants.Type.Identificator:
 					if (token.Value.Equals(TokenConstants.Identificators[Identificator.Repeat]))
 					{
 						node = new IdentificatorNode(Identificator.Repeat);
-						node.AddChild(Statement());
-						node.AddChild(Statement());
+						temp = Statement();
+						if (temp is VariableNode || temp is MelodyNode)
+						{
+							node.AddChild(temp);
+						}
+						else
+						{
+							node.AddChild(new ErrorNode("Variable or notes"));
+						}
+						temp = Statement();
+						if (temp is NumberNode)
+						{
+							node.AddChild(temp);
+						}
+						else
+						{
+							node.AddChild(new ErrorNode("Number value requered"));
+						}
 					}
 					else if (token.Value.Equals(TokenConstants.Identificators[Identificator.Sleep]))
 					{
 						node = new IdentificatorNode(Identificator.Sleep);
-						node.AddChild(Statement());
+						temp = Statement();
+						if (temp is NumberNode)
+						{
+							node.AddChild(temp);
+						}
+						else
+						{
+							node.AddChild(new ErrorNode("Number value requered"));
+						}
 					}
 					else if (token.Value.Equals(TokenConstants.Identificators[Identificator.Thread]))
 					{
 						node = new IdentificatorNode(Identificator.Thread);
 						do
 						{
-							node.AddChild(Statement());
+							temp = Statement();
+							if (temp is VariableNode)
+							{
+								node.AddChild(temp);
+							}
+							else
+							{
+								node.AddChild(new ErrorNode("Variable requered"));
+							}
 						} while (ListOfTokens[Index].Type != TokenConstants.Type.Line);
-
 					}
 					break;
 				case TokenConstants.Type.Note:
@@ -61,6 +93,7 @@ namespace CouseWork.musiccompiler.Controller
 					break;
 				case TokenConstants.Type.Variable:
 					node = new VariableNode(token.Value);
+
 					break;
 				case TokenConstants.Type.Number:
 					node = new NumberNode(int.Parse(token.Value));
