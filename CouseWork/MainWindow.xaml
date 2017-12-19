@@ -3,10 +3,84 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CouseWork"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="#424242"
+        Title="MainWindow" Width="1000" Height="500" KeyDown="Window_KeyDown">
+
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="SimpleButton">
+            <Setter Property="Background" Value="#37474F" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="#ECEFF1" />
+            <Setter Property="Padding" Value="18 8 24 8" />
+            <Setter Property="FontSize" Value="18" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#263238" />
+                    <Setter Property="Button.Effect">
+                        <Setter.Value>
+                            <DropShadowEffect
+                                ShadowDepth="4"
+                                Direction="90"
+                                Opacity="0.35"
+                                RenderingBias="Quality"
+                                BlurRadius="5" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Orientation="Horizontal"
+                Name="Root"
+                Width="1000"
+                Margin="0">
+        <TextBox
+            Name="EditorTextEdit"
+            TextWrapping="Wrap"
+            AcceptsReturn="True"
+            Background="#263238"
+            MinWidth="800"
+            FontSize="24"
+            BorderThickness="0"
+            Foreground="#ECEFF1" TextChanged="Editor_TextEdit_TextChanged" />
+
+        <StackPanel HorizontalAlignment="Stretch"
+                    Width="200">
+            <Button Name="PlayButton"
+                    Style="{StaticResource SimpleButton}"
+                    IsEnabled="False" Click="Play_Button_Click">
+                Play
+            </Button>
+            <Button Style="{StaticResource SimpleButton}" Click="Compile_Button_Click">Compile</Button>
+            <Button Style="{StaticResource SimpleButton}">Save</Button>
+            <Button Style="{StaticResource SimpleButton}">Import</Button>
+
+            <TextBox Name="ConsoleTextBox"
+                     FontSize="18"
+                     BorderThickness="0"
+                     TextWrapping="Wrap"
+                     Background="#455A64"
+                     IsReadOnly="True"
+                     Foreground="#ECEFF1"
+                     TextDecorations="Underline"
+                     Height="300"/>
+
+            <Button Style="{StaticResource SimpleButton}"
+                    Foreground="#B71C1C" Click="Exit_Button_Click">
+                Exit
+            </Button>
+            
+        </StackPanel>
+    </StackPanel>
+
+
 </Window>

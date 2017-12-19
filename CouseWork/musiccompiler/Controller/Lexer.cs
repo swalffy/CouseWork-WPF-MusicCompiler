@@ -21,7 +21,7 @@ namespace CouseWork.musiccompiler.Controller
 		public Lexer(string code)
 		{
 			_index = 0;
-			_code = code + '\n';
+			_code = code.Replace("\r", "") + '\n';
 			_currentCharacter = GetNextChar();
 		}
 
