@@ -12,7 +12,6 @@ namespace Tests.tests
 		[TestMethod]
 		public void VariableParser()
 		{
-//			TODO fix test
 			string inputString = "#Var n1n2n3";
 			Parser.Parse(inputString);
 

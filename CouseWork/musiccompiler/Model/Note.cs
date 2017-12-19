@@ -19,7 +19,7 @@ namespace CouseWork.musiccompiler.Model
 		public void Play()
 		{
 
-			Player.SoundLocation = Properties.Resources.SoundsFolderPath + Value + ".wav";
+			Player.SoundLocation = Properties.Resources.ResourcesFolderPath + Value + ".wav";
 			Player.PlaySync();
 		}
 

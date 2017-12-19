@@ -23,6 +23,8 @@ namespace CouseWork
 
 		private TextBox _console;
 
+		public static string Filename;
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -32,7 +34,8 @@ namespace CouseWork
 
 		private void Compile_Button_Click(object sender, RoutedEventArgs e)
 		{
-			string code = this.EditorTextEdit.Text;
+			ConsoleTextBox.Text = String.Empty;
+			string code = EditorTextEdit.Text;
 			try
 			{
 				_player = Compiler.Instance.Compile(code);
@@ -73,6 +76,18 @@ namespace CouseWork
 			{
 				this._console.Text = "Help";
 			}
+		}
+
+		private void Save_Button_Click(object sender, RoutedEventArgs e)
+		{
+			SaveForm save = new SaveForm(EditorTextEdit.Text);
+			save.ShowDialog();
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			ImportForm import = new ImportForm(EditorTextEdit);
+			import.ShowDialog();
 		}
 	}
 }

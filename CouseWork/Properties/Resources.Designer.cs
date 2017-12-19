@@ -63,9 +63,9 @@ namespace CouseWork.Properties {
         /// <summary>
         ///   Looks up a localized string similar to ..\..\..\Resources\.
         /// </summary>
-        internal static string SoundsFolderPath {
+        internal static string ResourcesFolderPath {
             get {
-                return ResourceManager.GetString("SoundsFolderPath", resourceCulture);
+                return ResourceManager.GetString("ResourcesFolderPath", resourceCulture);
             }
         }
     }

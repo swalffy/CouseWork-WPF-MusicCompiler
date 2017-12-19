@@ -61,8 +61,8 @@
                 Play
             </Button>
             <Button Style="{StaticResource SimpleButton}" Click="Compile_Button_Click">Compile</Button>
-            <Button Style="{StaticResource SimpleButton}">Save</Button>
-            <Button Style="{StaticResource SimpleButton}">Import</Button>
+            <Button Style="{StaticResource SimpleButton}" Click="Save_Button_Click">Save</Button>
+            <Button Style="{StaticResource SimpleButton}" Click="Button_Click">Import</Button>
 
             <TextBox Name="ConsoleTextBox"
                      FontSize="18"
@@ -78,9 +78,7 @@
                     Foreground="#B71C1C" Click="Exit_Button_Click">
                 Exit
             </Button>
-            
+
         </StackPanel>
     </StackPanel>
-
-
 </Window>

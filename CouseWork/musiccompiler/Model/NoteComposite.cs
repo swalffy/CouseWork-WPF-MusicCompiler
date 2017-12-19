@@ -19,7 +19,7 @@ namespace CouseWork.musiccompiler.Model
 		{
 			foreach (var note in Note)
 			{
-				_player.SoundLocation = Properties.Resources.SoundsFolderPath + note + ".wav";
+				_player.SoundLocation = Properties.Resources.ResourcesFolderPath + note + ".wav";
 				_player.PlaySync();
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CouseWork.musiccompiler.Api;
 
 namespace CouseWork.musiccompiler.Model.Node
@@ -15,7 +16,6 @@ namespace CouseWork.musiccompiler.Model.Node
 
 		public override List<INote> Compile()
 		{
-//			TODO errors
 			return base.Compile();
 		}
 	}
