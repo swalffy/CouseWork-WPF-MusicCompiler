@@ -25,7 +25,7 @@ namespace CouseWork
 			InitializeComponent();
 		}
 
-		private TextBox _target;
+		private readonly TextBox _target;
 		private string _filename;
 
 		public ImportForm(TextBox textbox)
